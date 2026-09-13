@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+
+	"github.com/deathcore1998/log-parser/parser"
 )
 
 const (
@@ -24,7 +26,12 @@ func main() {
 	countReadLine := 0
 
 	for scanner.Scan() && countReadLine < maxLine {
-		fmt.Println(scanner.Text())
+
+		log := parser.ParseLine(scanner.Text())
+
+		fmt.Println(log)
+
+		//fmt.Println(scanner.Text())
 		countReadLine++
 	}
 

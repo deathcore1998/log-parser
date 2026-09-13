@@ -1,0 +1,14 @@
+*.exe
+*.out
+log-parser
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+*.log
+!data/Apache_2k.log

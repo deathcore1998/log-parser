@@ -6,11 +6,11 @@ import (
 	"os"
 
 	"github.com/deathcore1998/log-parser/parser"
+	"github.com/deathcore1998/log-parser/stats"
 )
 
 const (
 	logPath = "data/Apache_2k.log"
-	maxLine = 10
 )
 
 func main() {
@@ -22,21 +22,21 @@ func main() {
 
 	defer logFile.Close()
 
-	scanner := bufio.NewScanner(logFile)
-	countReadLine := 0
+	levelCount := make(map[string]int)
+	messageCount := make(map[string]int)
 
-	for scanner.Scan() && countReadLine < maxLine {
+	scanner := bufio.NewScanner(logFile)
+	for scanner.Scan() {
 
 		log := parser.ParseLine(scanner.Text())
-
-		fmt.Println(log)
-
-		//fmt.Println(scanner.Text())
-		countReadLine++
+		levelCount[log.Level]++
+		messageCount[log.Message]++
 	}
 
 	if err := scanner.Err(); err != nil {
 		fmt.Println("Error reading")
 		os.Exit(1)
 	}
+
+	stats.PrintStats(levelCount, messageCount)
 }

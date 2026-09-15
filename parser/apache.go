@@ -14,32 +14,33 @@ func ParseLine(line string) LogEntry {
 	logEntry := LogEntry{}
 
 	// find data
-	dataEnd := strings.Index(line, "]") + 1
-	if dataEnd == 0 {
+	dataEnd := strings.Index(line, "]")
+	if dataEnd == -1 {
 		return LogEntry{}
 	}
 
-	logEntry.Data = line[:dataEnd]
-	line = strings.TrimSpace(line[dataEnd:])
+	logEntry.Data = line[1:dataEnd]
+	line = strings.TrimSpace(line[dataEnd+1:])
 
 	if len(line) < 2 || line[0] != '[' {
 		return logEntry
 	}
 
 	// find level
-	levelEnd := strings.Index(line, "]") + 1
-	if levelEnd == 0 {
+	levelEnd := strings.Index(line, "]")
+	if levelEnd == -1 {
 		return logEntry
 	}
 
-	logEntry.Level = line[:levelEnd]
-	line = strings.TrimSpace(line[levelEnd:])
+	logEntry.Level = line[1:levelEnd]
+	line = strings.TrimSpace(line[levelEnd+1:])
 
 	// find client
-	if strings.HasPrefix(line, "[client ") {
-		endClient := strings.Index(line, "]") + 1
-		if endClient != 0 {
-			logEntry.Client = line[:endClient]
+	clientPrefix := "[client "
+	if strings.HasPrefix(line, clientPrefix) {
+		endClient := strings.Index(line, "]")
+		if endClient != -1 {
+			logEntry.Client = line[len(clientPrefix):endClient]
 			line = line[endClient:]
 		}
 	}

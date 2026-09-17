@@ -3,7 +3,7 @@ package parser
 import "strings"
 
 type LogEntry struct {
-	Data    string
+	Date    string
 	Level   string
 	Client  string
 	Message string
@@ -19,7 +19,7 @@ func ParseLine(line string) LogEntry {
 		return LogEntry{}
 	}
 
-	logEntry.Data = line[1:dataEnd]
+	logEntry.Date = line[1:dataEnd]
 	line = strings.TrimSpace(line[dataEnd+1:])
 
 	if len(line) < 2 || line[0] != '[' {

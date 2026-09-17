@@ -15,7 +15,7 @@ func TestParseLine(t *testing.T) {
 			name: "Notice without client",
 			line: "[Sun Dec 04 05:04:03 2005] [notice] jk2_init() Found child 8743 in scoreboard slot 7",
 			expected: LogEntry{
-				Data:    "Sun Dec 04 05:04:03 2005",
+				Date:    "Sun Dec 04 05:04:03 2005",
 				Level:   "notice",
 				Client:  "",
 				Message: "jk2_init() Found child 8743 in scoreboard slot 7",
@@ -25,7 +25,7 @@ func TestParseLine(t *testing.T) {
 			name: "Error with client",
 			line: "[Mon Dec 05 10:26:39 2005] [error] [client 141.153.150.164] Directory index forbidden by rule: /var/www/html/",
 			expected: LogEntry{
-				Data:    "Mon Dec 05 10:26:39 2005",
+				Date:    "Mon Dec 05 10:26:39 2005",
 				Level:   "error",
 				Client:  "141.153.150.164",
 				Message: "Directory index forbidden by rule: /var/www/html/",

@@ -11,8 +11,8 @@ import (
 )
 
 func main() {
-	filePath := flag.String("file", "data/Apache_2k.log", "file path")
-	levelFilter := flag.String("level", "", "level filter")
+	filePath := flag.String("file", "data/Apache_2k.log", "Path to the log file")
+	levelFilter := flag.String("level", "", "Filter by level (error, notice)")
 
 	flag.Parse()
 

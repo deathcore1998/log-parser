@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
 
@@ -9,12 +10,13 @@ import (
 	"github.com/deathcore1998/log-parser/stats"
 )
 
-const (
-	logPath = "data/Apache_2k.log"
-)
-
 func main() {
-	logFile, err := os.Open(logPath)
+	filePath := flag.String("file", "data/Apache_2k.log", "file path")
+	levelFilter := flag.String("level", "", "level filter")
+
+	flag.Parse()
+
+	logFile, err := os.Open(*filePath)
 	if err != nil {
 		fmt.Println("Error open file!", err)
 		os.Exit(1)
@@ -27,8 +29,15 @@ func main() {
 
 	scanner := bufio.NewScanner(logFile)
 	for scanner.Scan() {
-
 		log := parser.ParseLine(scanner.Text())
+		if log.Level == "" {
+			continue
+		}
+
+		if *levelFilter != "" && *levelFilter != log.Level {
+			continue
+		}
+
 		levelCount[log.Level]++
 		messageCount[log.Message]++
 	}

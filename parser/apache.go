@@ -41,7 +41,7 @@ func ParseLine(line string) LogEntry {
 		endClient := strings.Index(line, "]")
 		if endClient != -1 {
 			logEntry.Client = line[len(clientPrefix):endClient]
-			line = line[endClient:]
+			line = strings.TrimSpace(line[endClient+1:])
 		}
 	}
 	logEntry.Message = line
